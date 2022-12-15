@@ -10,15 +10,15 @@ This code was written for Terraform v1.3.5.
 
 First initialize the files:
 ```shell
-terraform init -var-file="variables.tfvars"
+terraform init
 ```
 With plan you can check the aws API.
 ```shell
-terraform plan -var-file="variables.tfvars"
+terraform plan
 ```
 Apply will apply the configuration and setup everything accordingly to the configuration file.
 ```shell
-terraform apply -var-file="variables.tfvars"
+terraform apply
 ```
 
 
