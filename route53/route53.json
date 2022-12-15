@@ -1,0 +1,30 @@
+{
+  "AWSPolicyFormatVersion":"2015-10-01",
+  "RecordType":"A",
+  "StartRule":"region_selector",
+  "Endpoints":{
+    "central_lb":{
+      "Type":"elastic-load-balancer",
+      "Value":"web-load-balancer-396603102.eu-central-1.elb.amazonaws.com"
+    },
+    "west_lb":{
+      "Type":"elastic-load-balancer",
+      "Value":"web-load-balancer-1253202082.eu-west-3.elb.amazonaws.com"
+    }
+  },
+  "Rules":{
+    "region_selector":{
+      "RuleType":"latency",
+      "Regions":[
+        {
+          "Region":"eu-central-1",
+          "EndpointReference":"central_lb"
+        },
+        {
+          "Region":"eu-west-3",
+          "EndpointReference":"west_lb"
+        }
+      ]
+    }
+  }
+}
