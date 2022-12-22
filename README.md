@@ -9,7 +9,7 @@ This code was written for Terraform v1.3.5.
 # Contains
 
 This configuration contains:
-- Auto-scaling and load balanced Ec2 Infrastructure with a minimal webserver deployment
+- Auto-scaling and load balanced Ec2 infrastructure with a minimal webserver deployment in two regions
 - Route53 latency routing to the 2 load balanced regions
 # Configuration
 
@@ -34,6 +34,9 @@ module "main_region_config" { \
 }
 
 # Usage
+<h6>Before you use any terraform command, please make sure the aws cli was configured via the "aws configure" command and 
+the access key, secret key and region was set there.</h6>
+
 
 First initialize the files:
 ```shell
