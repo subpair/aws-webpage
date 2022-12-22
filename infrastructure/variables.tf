@@ -1,35 +1,34 @@
+// Region specific
 variable region {
   description = "The main region"
   type = string
   default = "eu-central-1"
 }
-variable "vpc_cidr_block" {
-  description = "Available cidr blocks for public subnets."
+// ETC
+variable "vpc_v4_cidr_block" {
+  description = "Available v4 cidr blocks for public subnets."
   type        = list(string)
   default     = [
     "10.0.0.0/16",
   ]
 }
-variable "subnet_cidr_blocks" {
-  description = "Available cidr blocks for public subnets."
+variable "subnet_v4_cidr_blocks" {
+  description = "Available v4 cidr blocks for public subnets."
   type        = list(string)
   default     = [
     "10.0.1.0/24",
     "10.0.2.0/24",
   ]
 }
-variable "subnet-availability_zone" {
-  description = "Available cidr blocks for public subnets."
-  type        = list(string)
-  default     = [
-    "eu-central-1a",
-    "eu-central-1b",
-  ]
-}
-variable "cidr_everywhere" {
+variable "cidr_v4_everywhere" {
   description = "cidr block for everywhere"
   type        = string
   default     = "0.0.0.0/0"
+}
+variable "cidr_v6_everywhere" {
+  description = "cidr block for everywhere"
+  type        = string
+  default     = "::/0"
 }
 variable "key_name" {
   description = "The key name"
@@ -50,11 +49,6 @@ variable "key_file_name" {
   description = "The key name"
   type        = string
   default     = "myKey.pem"
-}
-variable "ami" {
-  description = "The amazon machine image"
-  type        = string
-  default     = "ami-076309742d466ad69"
 }
 variable "instances_type" {
   description = "The instances type"

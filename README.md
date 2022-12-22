@@ -6,19 +6,46 @@ It was written for the IU University's course *"DLBSEPCP01_E" - Cloud Programmin
 
 This code was written for Terraform v1.3.5.
 
+# Contains
+
+This configuration contains:
+- Auto-scaling and load balanced Ec2 Infrastructure with a minimal webserver deployment
+- Route53 latency routing to the 2 load balanced regions
+# Configuration
+
+You can change the configuration easily by overriding the variables in the main.tf or variables.tf file in the root 
+folder. \
+If you want to change for example the second region to us-west-1, you can edit the variables.tf and change the subregion
+block to:
+
+variable sub_region { \
+  description = "The sub region" \
+  type = string \
+  default = <mark>"us-west-1"</mark> \
+}
+
+If you want to change some settings, for example the minimum auto-scaling capacity for one region you can simply add 
+this by overriding the variable in the main.tf file`s block:
+
+module "main_region_config" { \
+  source = "./infrastructure" \
+  region = var.main_region \
+  <mark>asg_minimum_capacity = 1</mark> \
+}
+
 # Usage
 
 First initialize the files:
 ```shell
-terraform init -var-file="variables.tfvars"
+terraform init
 ```
 With plan you can check the aws API.
 ```shell
-terraform plan -var-file="variables.tfvars"
+terraform plan
 ```
 Apply will apply the configuration and setup everything accordingly to the configuration file.
 ```shell
-terraform apply -var-file="variables.tfvars"
+terraform apply -auto-approve
 ```
 
 
