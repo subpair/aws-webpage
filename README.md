@@ -17,6 +17,7 @@ folder. \
 If you want to change for example the second region to us-west-1, you can edit the variables.tf and change the subregion
 block to:
 
+variables.tf \
 variable sub_region { \
   description = "The sub region" \
   type = string \
@@ -26,12 +27,12 @@ variable sub_region { \
 If you want to change some settings, for example the minimum auto-scaling capacity for one region you can simply add 
 this by overriding the variable in the main.tf file`s block:
 
+main.tf \
 module "main_region_config" { \
   source = "./infrastructure" \
   region = var.main_region \
-  <mark>asg_minimum_capacity = 1</mark> \
+  <mark>asg_minimum_capacity = 3</mark> \
 }
-
 # Prerequisites
 - A domain is needed, in the current code an aws domain is used. If you do not own a domain directly by aws, delete the 
 last part of the main.tf file in the root folder which updates the name servers and update them manually at your domain 
@@ -54,7 +55,13 @@ Apply will apply the configuration and setup everything accordingly to the confi
 ```shell
 terraform apply -auto-approve
 ```
+After successful deployment of the infrastructure, you will have the ssh keys in the root directory as .pem files which
+can be used to generate your private keys to access the servers via ssh.
 
+If you want to delete the created resources afterwards you can run destroy.
+```shell
+terraform destroy -auto-approve
+```
 # Contributing
 
 If you'd like to contribute, please fork the repository and make changes as you'd like. \

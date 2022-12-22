@@ -166,6 +166,7 @@ resource "aws_launch_template" "webserver_machine" {
   name = "${var.region}.webserver_machine"
   image_id = data.aws_ami.amazonLinux.image_id
   instance_type = var.instances_type
+  key_name = "${var.region}.${var.key_name}"
   network_interfaces {
     device_index = 0
     associate_public_ip_address = true
@@ -213,6 +214,33 @@ resource "aws_autoscaling_group" "scaling_webserver" {
     version = "$Latest"
   }
 }
+
+
+resource "aws_autoscaling_policy" "cpu_average" {
+  name                   = "${var.region}.cpu-scaling"
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = aws_autoscaling_group.scaling_webserver.name
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpu_utilization" {
+  alarm_name          = "${var.region}.cpu-scaling-watch"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "80"
+  dimensions = {
+    AutoScalingGroupName = aws_autoscaling_group.scaling_webserver.name
+  }
+
+  alarm_description = "This metric monitors ec2 cpu utilization"
+  alarm_actions     = [aws_autoscaling_policy.cpu_average.arn]
+}
+
 // Load balancer attachment to auto scaling group
 resource "aws_autoscaling_attachment" "scaling_webserver_balancer" {
   autoscaling_group_name = aws_autoscaling_group.scaling_webserver.id

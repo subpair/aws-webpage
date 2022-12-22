@@ -1,21 +1,20 @@
 module "main_region_config" {
   source = "./infrastructure"
   region = var.main_region
-  asg_minimum_capacity = 1
 }
 module "sub_region_config" {
   source = "./infrastructure"
   region = var.sub_region
 }
-// Route53
-/// Hosted record zone
+/// Route53
+// Hosted record zone
 resource "aws_route53_zone" "primary" {
   name = var.domain_name
   tags = {
     Name = "hosted-zone_primary"
   }
 }
-// Record entries and latency routing (A for Ipv4 and AAAA for Ipv6)
+// Record entries with latency routing (A for Ipv4 and AAAA for Ipv6)
 resource "aws_route53_record" "a_main_region_record" {
   name            = var.domain_name
   type            = "A"
@@ -24,7 +23,7 @@ resource "aws_route53_record" "a_main_region_record" {
   alias {
     name = module.main_region_config.load_balancer.dns_name
     zone_id = module.main_region_config.load_balancer.zone_id
-    evaluate_target_health = false
+    evaluate_target_health = true
   }
   latency_routing_policy {
     region = var.main_region
@@ -38,7 +37,7 @@ resource "aws_route53_record" "a_sub_region_record" {
   alias {
     name = module.sub_region_config.load_balancer.dns_name
     zone_id = module.sub_region_config.load_balancer.zone_id
-    evaluate_target_health = false
+    evaluate_target_health = true
   }
   latency_routing_policy {
     region = var.sub_region
@@ -52,7 +51,7 @@ resource "aws_route53_record" "aaaa_main_region_record" {
   alias {
     name = module.main_region_config.load_balancer.dns_name
     zone_id = module.main_region_config.load_balancer.zone_id
-    evaluate_target_health = false
+    evaluate_target_health = true
   }
   latency_routing_policy {
     region = var.main_region
@@ -66,7 +65,7 @@ resource "aws_route53_record" "aaaa_sub_region_record" {
   alias {
     name = module.sub_region_config.load_balancer.dns_name
     zone_id = module.sub_region_config.load_balancer.zone_id
-    evaluate_target_health = false
+    evaluate_target_health = true
   }
   latency_routing_policy {
     region = var.sub_region
