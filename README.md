@@ -44,24 +44,32 @@ provider.
 <h6>Before you use any terraform command, please make sure the aws cli was configured via the "aws configure" command and 
 the access key, secret key and region was set there.</h6>
 First initialize the files:
+
 ```shell
 terraform init
 ```
+
 With plan you can check the aws API.
+
 ```shell
 terraform plan
 ```
+
 Apply will apply the configuration and setup everything accordingly to the configuration file.
+
 ```shell
 terraform apply -auto-approve
 ```
+
 After successful deployment of the infrastructure, you will have the ssh keys in the root directory as .pem files which
-can be used to generate your private keys to access the servers via ssh.
+can be used to generate your private keys to access the servers via ssh. 
 
 If you want to delete the created resources afterwards you can run destroy.
+
 ```shell
 terraform destroy -auto-approve
 ```
+
 # Contributing
 
 If you'd like to contribute, please fork the repository and make changes as you'd like. \
