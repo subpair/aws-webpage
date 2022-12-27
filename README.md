@@ -1,4 +1,4 @@
-# A highly scalable and high-available simple webpage on AWS
+# A scalable and high-available simple webpage on AWS
 
 This repository contains infrastructure-as-code for a highly available and scalable simple webpage on AWS. \
 It was written for the IU University's course *"DLBSEPCP01_E" - Cloud Programming"*. \
