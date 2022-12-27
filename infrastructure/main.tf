@@ -99,8 +99,8 @@ resource "aws_security_group" "traffic_rules" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = [var.cidr_v4_everywhere]
-    ipv6_cidr_blocks = [var.cidr_v6_everywhere]
+    cidr_blocks      = [var.cidr_v4_ssh_own_ip]
+    ipv6_cidr_blocks = [var.cidr_v6_ssh_own_ip]
   }
     ingress {
     description      = "http inbound"
@@ -202,13 +202,38 @@ resource "aws_lb_target_group" "lb_to_web_targets" {
     Name = "${var.region}.loadbalancer_target-group"
   }
 }
+resource "aws_cloudwatch_metric_alarm" "asg_machines_active" {
+  alarm_name          = "${var.region}.machines_active"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = 10
+  metric_name         = "GroupInServiceInstances"
+  namespace           = "AWS/AutoScaling"
+  period              = 10
+  statistic           = "Minimum"
+  threshold           = 0
+  alarm_description   = "metric for machines up for the auto scaling group"
+
+  dimensions = {
+    "AutoScalingGroupName"  = aws_autoscaling_group.scaling_webserver.id
+  }
+}
 // Auto scaling group
 resource "aws_autoscaling_group" "scaling_webserver" {
-  name = "${var.region}.webserver_asg"
-  vpc_zone_identifier = [aws_subnet.av_1.id,aws_subnet.av_2.id]
-  desired_capacity   = var.asg_desired_capacity
-  max_size           = var.asg_maximum_capacity
-  min_size           = var.asg_minimum_capacity
+  name                      = "${var.region}.webserver_asg"
+  vpc_zone_identifier       = [aws_subnet.av_1.id, aws_subnet.av_2.id]
+  desired_capacity          = var.asg_desired_capacity
+  max_size                  = var.asg_maximum_capacity
+  min_size                  = var.asg_minimum_capacity
+  default_cooldown          = var.asg_default_cooldown
+  health_check_grace_period = var.asg_health_check_grace_period
+  warm_pool {
+    pool_state                  = "Running"
+    min_size                    = var.asg_warm_pool_min_size
+    max_group_prepared_capacity = var.asg_warm_pool_max_size
+    instance_reuse_policy {
+      reuse_on_scale_in = true
+    }
+  }
   launch_template {
     id      = aws_launch_template.webserver_machine.id
     version = "$Latest"

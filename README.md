@@ -39,6 +39,10 @@ last part of the main.tf file in the root folder which updates the name servers 
 provider.
 - AWS CLI (https://aws.amazon.com/cli)
 - Terraform (https://www.terraform.io/downloads)
+- An account in AWS IAM is set up with at-least the rights for:
+> AmazonEC2FullAccess
+> AmazonVPCFullAccess
+> AmazonRoute53FullAccess
 
 # Usage
 <h6>Before you use any terraform command, please make sure the aws cli was configured via the "aws configure" command and 
@@ -49,13 +53,13 @@ First initialize the files:
 terraform init
 ```
 
-With plan you can check the aws API.
+With plan, you can check the aws API.
 
 ```shell
 terraform plan
 ```
 
-Apply will apply the configuration and setup everything accordingly to the configuration file.
+Apply will start the configuration and setup everything accordingly to the configuration file.
 
 ```shell
 terraform apply -auto-approve

@@ -1,10 +1,14 @@
 module "main_region_config" {
   source = "./infrastructure"
   region = var.main_region
+  cidr_v4_ssh_own_ip = "87.166.101.116/32"
+  cidr_v6_ssh_own_ip = "2003:F8:4715:E33:88E0:CA0E:5B65:6E5B/128"
 }
 module "sub_region_config" {
   source = "./infrastructure"
   region = var.sub_region
+  cidr_v4_ssh_own_ip = "87.166.101.116/32"
+  cidr_v6_ssh_own_ip = "2003:F8:4715:E33:88E0:CA0E:5B65:6E5B/128"
 }
 /// Route53
 // Hosted record zone

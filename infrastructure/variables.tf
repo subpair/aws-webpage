@@ -25,6 +25,16 @@ variable "cidr_v4_everywhere" {
   type        = string
   default     = "0.0.0.0/0"
 }
+variable "cidr_v4_ssh_own_ip" {
+  description = "cidr block for everywhere"
+  type        = string
+  default     = "127.0.0.1/32"
+}
+variable "cidr_v6_ssh_own_ip" {
+  description = "cidr block for everywhere"
+  type        = string
+  default     = "::1/128"
+}
 variable "cidr_v6_everywhere" {
   description = "cidr block for everywhere"
   type        = string
@@ -70,3 +80,24 @@ variable "asg_maximum_capacity" {
   type        = number
   default     = "5"
 }
+variable "asg_warm_pool_min_size" {
+  description = "The minimum size of the warm pool instances for auto scaling"
+  type        = number
+  default     = "1"
+}
+variable "asg_warm_pool_max_size" {
+  description = "The maximum size of the warm pool instances for auto scaling"
+  type        = number
+  default     = "2"
+}
+variable "asg_default_cooldown" {
+  description = "The time before another scaling activity starts"
+  type        = number
+  default     = "60"
+}
+variable "asg_health_check_grace_period" {
+  description = "The time until a health check is performed on a fresh instance"
+  type        = number
+  default     = "60"
+}
+
