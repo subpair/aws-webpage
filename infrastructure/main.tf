@@ -226,6 +226,8 @@ resource "aws_autoscaling_group" "scaling_webserver" {
   min_size                  = var.asg_minimum_capacity
   default_cooldown          = var.asg_default_cooldown
   health_check_grace_period = var.asg_health_check_grace_period
+  // TODO:
+  //enabled_metrics = [GroupInServiceInstances]
   warm_pool {
     pool_state                  = "Running"
     min_size                    = var.asg_warm_pool_min_size
