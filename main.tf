@@ -1,96 +1,25 @@
 module "main_region_config" {
   source = "./infrastructure"
   region = var.main_region
-  cidr_v4_ssh_own_ip = "87.166.101.116/32"
-  cidr_v6_ssh_own_ip = "2003:F8:4715:E33:88E0:CA0E:5B65:6E5B/128"
+  cidr_v4_ssh_own_ip = var.v4_own_ip
+  cidr_v6_ssh_own_ip = var.v6_own_ip
+  aws_route53_zone_primary = aws_route53_zone.primary
+  domain_name = var.domain_name
 }
 module "sub_region_config" {
   source = "./infrastructure"
   region = var.sub_region
-  cidr_v4_ssh_own_ip = "87.166.101.116/32"
-  cidr_v6_ssh_own_ip = "2003:F8:4715:E33:88E0:CA0E:5B65:6E5B/128"
-}
-/// Route53
-// Hosted record zone
-resource "aws_route53_zone" "primary" {
-  name = var.domain_name
-  tags = {
-    Name = "hosted-zone_primary"
-  }
-}
-// Record entries with latency routing (A for Ipv4 and AAAA for Ipv6)
-resource "aws_route53_record" "a_main_region_record" {
-  name            = var.domain_name
-  type            = "A"
-  zone_id         = aws_route53_zone.primary.zone_id
-  set_identifier = "geo_load_balance-${var.main_region}"
-  alias {
-    name = module.main_region_config.load_balancer.dns_name
-    zone_id = module.main_region_config.load_balancer.zone_id
-    evaluate_target_health = true
-  }
-  latency_routing_policy {
-    region = var.main_region
-  }
-}
-resource "aws_route53_record" "a_sub_region_record" {
-  name            = var.domain_name
-  type            = "A"
-  zone_id         = aws_route53_zone.primary.zone_id
-  set_identifier = "geo_load_balance-${var.sub_region}"
-  alias {
-    name = module.sub_region_config.load_balancer.dns_name
-    zone_id = module.sub_region_config.load_balancer.zone_id
-    evaluate_target_health = true
-  }
-  latency_routing_policy {
-    region = var.sub_region
-  }
-}
-resource "aws_route53_record" "aaaa_main_region_record" {
-  name            = var.domain_name
-  type            = "AAAA"
-  zone_id         = aws_route53_zone.primary.zone_id
-  set_identifier = "geo_load_balance-${var.main_region}"
-  alias {
-    name = module.main_region_config.load_balancer.dns_name
-    zone_id = module.main_region_config.load_balancer.zone_id
-    evaluate_target_health = true
-  }
-  latency_routing_policy {
-    region = var.main_region
-  }
-}
-resource "aws_route53_record" "aaaa_sub_region_record" {
-  name            = var.domain_name
-  type            = "AAAA"
-  zone_id         = aws_route53_zone.primary.zone_id
-  set_identifier = "geo_load_balance-${var.sub_region}"
-  alias {
-    name = module.sub_region_config.load_balancer.dns_name
-    zone_id = module.sub_region_config.load_balancer.zone_id
-    evaluate_target_health = true
-  }
-  latency_routing_policy {
-    region = var.sub_region
-  }
-}
-// Update the domains name servers
-resource "aws_route53domains_registered_domain" "set_name_servers" {
+  cidr_v4_ssh_own_ip = var.v4_own_ip
+  cidr_v6_ssh_own_ip = var.v6_own_ip
+  aws_route53_zone_primary = aws_route53_zone.primary
   domain_name = var.domain_name
-  name_server {
-    name = aws_route53_zone.primary.name_servers[0]
-  }
-  name_server {
-    name = aws_route53_zone.primary.name_servers[1]
-  }
-  name_server {
-    name = aws_route53_zone.primary.name_servers[2]
-  }
-  name_server {
-    name = aws_route53_zone.primary.name_servers[3]
-  }
-  tags = {
-    Name = "domain-nameservers"
-  }
 }
+/// TODO: route table association not working
+//module "third_region_config" {
+//  source = "./infrastructure"
+//  region = var.third_region
+//  cidr_v4_ssh_own_ip = var.v4_own_ip
+//  cidr_v6_ssh_own_ip = var.v6_own_ip
+//  aws_route53_zone_primary = aws_route53_zone.primary
+//  domain_name = var.domain_name
+//}

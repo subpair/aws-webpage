@@ -1,10 +1,8 @@
-// Region specific
 variable region {
   description = "The main region"
   type = string
   default = "eu-central-1"
 }
-// ETC
 variable "vpc_v4_cidr_block" {
   description = "Available v4 cidr blocks for public subnets."
   type        = list(string)
@@ -21,24 +19,24 @@ variable "subnet_v4_cidr_blocks" {
   ]
 }
 variable "cidr_v4_everywhere" {
-  description = "cidr block for everywhere"
+  description = "cidr v4 block for everywhere"
   type        = string
   default     = "0.0.0.0/0"
 }
+variable "cidr_v6_everywhere" {
+  description = "cidr v6 block for everywhere"
+  type        = string
+  default     = "::/0"
+}
 variable "cidr_v4_ssh_own_ip" {
-  description = "cidr block for everywhere"
+  description = "own cidr v4 block for ssh access"
   type        = string
   default     = "127.0.0.1/32"
 }
 variable "cidr_v6_ssh_own_ip" {
-  description = "cidr block for everywhere"
+  description = "own cidr v6 block for ssh access"
   type        = string
   default     = "::1/128"
-}
-variable "cidr_v6_everywhere" {
-  description = "cidr block for everywhere"
-  type        = string
-  default     = "::/0"
 }
 variable "key_name" {
   description = "The key name"
@@ -88,16 +86,23 @@ variable "asg_warm_pool_min_size" {
 variable "asg_warm_pool_max_size" {
   description = "The maximum size of the warm pool instances for auto scaling"
   type        = number
-  default     = "2"
+  default     = "1"
 }
 variable "asg_default_cooldown" {
   description = "The time before another scaling activity starts"
   type        = number
-  default     = "60"
+  default     = "120"
 }
 variable "asg_health_check_grace_period" {
   description = "The time until a health check is performed on a fresh instance"
   type        = number
-  default     = "60"
+  default     = "120"
 }
-
+variable domain_name {
+  description = "The domain name"
+  type = string
+  default = "subpair.click"
+}
+variable aws_route53_zone_primary {
+  description = "The primary route53 hosted zone"
+}
