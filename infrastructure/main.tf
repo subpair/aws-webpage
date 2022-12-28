@@ -202,21 +202,6 @@ resource "aws_lb_target_group" "lb_to_web_targets" {
     Name = "${var.region}.loadbalancer_target-group"
   }
 }
-resource "aws_cloudwatch_metric_alarm" "asg_machines_active" {
-  alarm_name          = "${var.region}.machines_active"
-  comparison_operator = "LessThanOrEqualToThreshold"
-  evaluation_periods  = 10
-  metric_name         = "GroupInServiceInstances"
-  namespace           = "AWS/AutoScaling"
-  period              = 10
-  statistic           = "Minimum"
-  threshold           = 0
-  alarm_description   = "metric for machines up for the auto scaling group"
-
-  dimensions = {
-    "AutoScalingGroupName"  = aws_autoscaling_group.scaling_webserver.id
-  }
-}
 // Auto scaling group
 resource "aws_autoscaling_group" "scaling_webserver" {
   name                      = "${var.region}.webserver_asg"
@@ -226,8 +211,6 @@ resource "aws_autoscaling_group" "scaling_webserver" {
   min_size                  = var.asg_minimum_capacity
   default_cooldown          = var.asg_default_cooldown
   health_check_grace_period = var.asg_health_check_grace_period
-  // TODO:
-  //enabled_metrics = [GroupInServiceInstances]
   warm_pool {
     pool_state                  = "Running"
     min_size                    = var.asg_warm_pool_min_size

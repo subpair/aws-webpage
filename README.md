@@ -12,6 +12,12 @@ This configuration contains:
 
 # Configuration
 
+To allow access to the server instance via ssh you need to configure in the variables.tf the values for \
+<mark>cidr_v4_ssh_own_ip</mark> \
+and \
+<mark>cidr_v6_ssh_own_ip</mark> \
+with your own ipv4 and ipv6 address
+
 You can change the configuration easily by overriding the variables in the main.tf or variables.tf file in the root 
 folder. \
 If you want to change for example the second region to us-west-1, you can edit the variables.tf and change the subregion
