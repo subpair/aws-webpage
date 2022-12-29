@@ -4,24 +4,24 @@ resource "tls_private_key" "settings" {
   rsa_bits  = var.key_bit_size
 }
 // Key pair settings
-resource "aws_key_pair" "settings" {
-  key_name   = "${var.region}.${var.key_name}"
+resource "aws_key_pair" "main" {
+  key_name   = var.key_name
   public_key = tls_private_key.settings.public_key_openssh
   tags = {
-    Name = "${var.region}.settings"
+    Name = "settings"
   }
 }
 // Key output
 resource "local_sensitive_file" "key_file" {
   content  = tls_private_key.settings.private_key_pem
-  filename = "ssh.${var.region}.${var.key_file_name}"
+  filename = "${var.region}_${var.key_file_name}"
   file_permission = "600"
   directory_permission = "700"
 }
 // Security group with inbound and outbound rules
 resource "aws_security_group" "traffic_rules" {
-  name        = "${var.region}.traffic rules"
-  description = "allow ssh/http/yum traffic"
+  name        = "traffic-rules"
+  description = "allow ssh-http-yum traffic"
   vpc_id      = aws_vpc.main.id
   ingress {
     description      = "ssh inbound"
@@ -64,6 +64,6 @@ resource "aws_security_group" "traffic_rules" {
     ipv6_cidr_blocks = [var.cidr_v6_everywhere]
   }
   tags = {
-    Name = "${var.region}.securitygroup-traffic_rules"
+    Name = "security-group-traffic-rules"
   }
 }

@@ -4,7 +4,7 @@ resource "aws_route53_record" "a_latency" {
   name            = var.domain_name
   type            = "A"
   zone_id         = var.aws_route53_zone_primary.zone_id
-  set_identifier = "geo_load_balance-${var.region}"
+  set_identifier = "geo-load-balance-4-${var.region}"
   alias {
     name = aws_lb.web.dns_name
     zone_id = aws_lb.web.zone_id
@@ -19,7 +19,7 @@ resource "aws_route53_record" "aaaa_latency" {
   name            = var.domain_name
   type            = "AAAA"
   zone_id         = var.aws_route53_zone_primary.zone_id
-  set_identifier = "geo_load_balance-${var.region}"
+  set_identifier = "geo-load-balance-6-${var.region}"
   alias {
     name = aws_lb.web.dns_name
     zone_id = aws_lb.web.zone_id

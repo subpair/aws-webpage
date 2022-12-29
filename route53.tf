@@ -2,7 +2,7 @@
 resource "aws_route53_zone" "primary" {
   name = var.domain_name
   tags = {
-    Name = "hosted-zone_primary"
+    Name = "hosted-zone-primary"
   }
 }
 // Update the domain's name servers

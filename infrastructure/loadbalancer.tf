@@ -6,7 +6,7 @@ resource "aws_lb" "web" {
   subnets            = [aws_subnet.av_1.id,aws_subnet.av_2.id]
   ip_address_type = "dualstack"
   tags = {
-    Name = "${var.region}.loadbalancer"
+    Name = "load-balancer"
   }
   drop_invalid_header_fields = true
 }
@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "to_webserver" {
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
   tags = {
-    Name = "${var.region}.loadbalancer_target-group"
+    Name = "load-balancer-target-group"
   }
 }
 // Load balancer listener for HTTP traffic
@@ -30,7 +30,7 @@ resource "aws_lb_listener" "forward_http" {
     target_group_arn = aws_lb_target_group.to_webserver.arn
   }
   tags = {
-    Name = "${var.region}.lb_listener"
+    Name = "lb-listener"
   }
 }
 // Load balancer attachment to auto scaling group

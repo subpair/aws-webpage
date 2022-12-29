@@ -41,7 +41,7 @@ variable "cidr_v6_ssh_own_ip" {
 variable "key_name" {
   description = "The key name"
   type        = string
-  default     = "myKey"
+  default     = "sshKey"
 }
 variable "key_algorithm" {
   description = "The key algorithm"
@@ -56,7 +56,7 @@ variable "key_bit_size" {
 variable "key_file_name" {
   description = "The key name"
   type        = string
-  default     = "myKey.pem"
+  default     = "sshKey.pem"
 }
 variable "instances_type" {
   description = "The instances type"

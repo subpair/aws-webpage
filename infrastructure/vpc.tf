@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
   cidr_block       = var.vpc_v4_cidr_block[0]
   assign_generated_ipv6_cidr_block = true
   tags = {
-    Name = "${var.region}.vpc-main"
+    Name = "vpc-main"
   }
 }
 data "aws_availability_zones" "available" {
@@ -18,7 +18,7 @@ resource "aws_subnet" "av_1" {
   availability_zone = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.region}.subnet-av_1"
+    Name = "subnet-av-1"
   }
 }
 // Subnet in availability zone 2
@@ -30,13 +30,13 @@ resource "aws_subnet" "av_2" {
   availability_zone = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.region}.subnet-av_2"
+    Name = "subnet-av-2"
   }
 }
 // Internet gateway for region
 resource "aws_internet_gateway" "gw" {
   tags = {
-    Name = "${var.region}.gateway"
+    Name = "gateway"
   }
 }
   resource "aws_internet_gateway_attachment" "gw_to_vpc" {
@@ -47,7 +47,7 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_route_table" "internet" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "${var.region}.routing-table"
+    Name = "routing-table"
   }
 }
 // Ipv4 route to Internet

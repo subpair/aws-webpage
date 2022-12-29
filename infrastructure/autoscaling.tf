@@ -21,10 +21,10 @@ data "aws_ami" "amazonLinux" {
 }
 // Launch template for webserver
 resource "aws_launch_template" "webserver_machine" {
-  name = "${var.region}.webserver_machine"
+  name = "webserver-machine-template"
   image_id = data.aws_ami.amazonLinux.image_id
   instance_type = var.instances_type
-  key_name = "${var.region}.${var.key_name}"
+  key_name = aws_key_pair.main.key_name
   network_interfaces {
     device_index = 0
     associate_public_ip_address = true
@@ -34,14 +34,14 @@ resource "aws_launch_template" "webserver_machine" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = "${var.region}.webserver"
+      Name = "webserver"
     }
   }
   user_data = filebase64("${path.module}/start_script.sh")
 }
 // Auto scaling group
 resource "aws_autoscaling_group" "webserver" {
-  name                      = "${var.region}.webserver_asg"
+  name                      = "webserver-asg"
   vpc_zone_identifier       = [aws_subnet.av_1.id, aws_subnet.av_2.id]
   desired_capacity          = var.asg_desired_capacity
   max_size                  = var.asg_maximum_capacity
@@ -62,14 +62,14 @@ resource "aws_autoscaling_group" "webserver" {
   }
   tag {
     key                 = "Name"
-    value               = "${var.region}.webserver_asg"
+    value               = "webserver-asg"
     propagate_at_launch = true
   }
 }
 // Autoscaling group policy to scale up when CPU average utilization of >80 is reached
 resource "aws_autoscaling_policy" "cpu_average" {
   autoscaling_group_name = aws_autoscaling_group.webserver.name
-  name                   = "${var.region}.cpu-scaling"
+  name                   = "cpu-scaling"
   adjustment_type        = "ChangeInCapacity"
   policy_type = "TargetTrackingScaling"
     target_tracking_configuration {
