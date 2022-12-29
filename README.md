@@ -87,7 +87,7 @@ terraform destroy -auto-approve
 
 # Further Documentation
 
-On every pull request a terraform-doc is automatically generated via a GitHub action. \
+On every push a terraform-doc is automatically generated via a GitHub action. \
 The file is named [TERRAFORM.md](TERRAFORM.md)
 # Contributing
 

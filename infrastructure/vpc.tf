@@ -46,27 +46,29 @@ resource "aws_internet_gateway" "gw" {
 // Route table for region
 resource "aws_route_table" "internet" {
   vpc_id = aws_vpc.main.id
-  route {
-    cidr_block = var.cidr_v4_everywhere
-    gateway_id = aws_internet_gateway.gw.id
-  }
-  route {
-    ipv6_cidr_block = var.cidr_v6_everywhere
-    gateway_id = aws_internet_gateway.gw.id
-  }
   tags = {
     Name = "${var.region}.routing-table"
   }
+}
+// Ipv4 route to Internet
+resource "aws_route" "internet_v4" {
+  destination_cidr_block = var.cidr_v4_everywhere
+  gateway_id = aws_internet_gateway.gw.id
+  route_table_id = aws_route_table.internet.id
+}
+// Ipv6 route to Internet
+resource "aws_route" "internet_v6" {
+  destination_ipv6_cidr_block = var.cidr_v6_everywhere
+  gateway_id = aws_internet_gateway.gw.id
+  route_table_id = aws_route_table.internet.id
 }
 // Route entry for availability zone 1
 resource "aws_route_table_association" "av1_to_internet" {
   subnet_id      = aws_subnet.av_1.id
   route_table_id = aws_route_table.internet.id
-  depends_on = [aws_route_table.internet] // Needed for more than 2 regions, else terraform will error on this (Bug?)
 }
 // Route entry for availability zone 2
 resource "aws_route_table_association" "av2_to_internet" {
   subnet_id      = aws_subnet.av_2.id
   route_table_id = aws_route_table.internet.id
-  depends_on = [aws_route_table.internet] // Needed for more than 2 regions, else terraform will error on this (Bug?)
 }
