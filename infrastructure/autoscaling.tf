@@ -62,14 +62,14 @@ resource "aws_autoscaling_group" "webserver" {
   }
   tag {
     key                 = "Name"
-    value               = "webserver_asg"
+    value               = "${var.region}.webserver_asg"
     propagate_at_launch = true
   }
 }
 // Autoscaling group policy to scale up when CPU average utilization of >80 is reached
 resource "aws_autoscaling_policy" "cpu_average" {
   autoscaling_group_name = aws_autoscaling_group.webserver.name
-  name                   = "cpu-scaling"
+  name                   = "${var.region}.cpu-scaling"
   adjustment_type        = "ChangeInCapacity"
   policy_type = "TargetTrackingScaling"
     target_tracking_configuration {

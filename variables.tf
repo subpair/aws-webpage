@@ -11,12 +11,12 @@ variable main_region {
 variable sub_region {
   description = "The sub region"
   type = string
-  default = "eu-west-3"
+  default = "us-west-1"
 }
 variable third_region {
   description = "The third region"
   type = string
-  default = "us-east-1"
+  default = "eu-north-1"
 }
 variable "v4_own_ip" {
   description = "v4 ip address for ssh access"

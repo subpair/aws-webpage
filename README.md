@@ -14,23 +14,24 @@ This configuration contains:
 1. You have to change the domain_name variable in the variables.tf to your domain to get the configuration up and 
 running.
 
-2. To allow access to the server instance via ssh you need to configure in the variables.tf the values for \
+2. To allow access to the server instance via ssh you need to configure in the variables.tf the values for 
 <mark>*v4_own_ip*</mark> and <mark>*v6_own_ip*</mark> with your own ipv4 and ipv6 address
 
 3. You can change anything else in the configuration easily by overriding the variables in the main.tf or variables.tf 
 file in the root folder. \
-If you want to change for example the second region to us-west-1, you can edit the variables.tf and change the subregion
-block to:
+If you want to change for example the second region to us-east-1, you can edit the variables.tf and change the 
+sub_region block to:
 
 variables.tf:
 >variable sub_region { \
   description = "The sub region" \
   type = string \
-  default = <mark>"us-west-1"</mark> \
+  default = <mark>"us-east-1"</mark> \
 }
 
-4. If you want to change some settings, for example the minimum auto-scaling capacity for one region you can simply add 
-this by overriding, or changing the variable in the main.tf file, or the variables.tf, in the infrastructure folder:
+4. If you want to change some settings, for example the minimum auto-scaling capacity for one region you can either 
+simply add this by overriding the variable in the main.tf file, or changing the variable in the variables.tf in the infrastructure 
+folder:
 
 /infrastructure/main.tf:
 >module "main_region_config" { \
@@ -40,7 +41,8 @@ this by overriding, or changing the variable in the main.tf file, or the variabl
 }
 
 5. You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
-included, you can activate this by simply uncommenting the block 'module "third_region_config"'.
+included, you can activate this by simply uncommenting the block 'module "third_region_config"' in the main.tf in the 
+root folder.
 
 # Prerequisites
 1. A domain is needed, in the current code an aws domain is used. If you do not own a domain directly by aws, delete the 
