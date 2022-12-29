@@ -17,6 +17,7 @@
 |------|--------|---------|
 | <a name="module_main_region_config"></a> [main\_region\_config](#module\_main\_region\_config) | ./infrastructure | n/a |
 | <a name="module_sub_region_config"></a> [sub\_region\_config](#module\_sub\_region\_config) | ./infrastructure | n/a |
+| <a name="module_third_region_config"></a> [third\_region\_config](#module\_third\_region\_config) | ./infrastructure | n/a |
 
 ## Resources
 
@@ -32,7 +33,7 @@
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | The domain name | `string` | `"subpair.click"` | no |
 | <a name="input_main_region"></a> [main\_region](#input\_main\_region) | The main region | `string` | `"eu-central-1"` | no |
 | <a name="input_sub_region"></a> [sub\_region](#input\_sub\_region) | The sub region | `string` | `"us-west-1"` | no |
-| <a name="input_third_region"></a> [third\_region](#input\_third\_region) | The third region | `string` | `"eu-north-1"` | no |
+| <a name="input_third_region"></a> [third\_region](#input\_third\_region) | The third region | `string` | `"ca-central-1"` | no |
 | <a name="input_v4_own_ip"></a> [v4\_own\_ip](#input\_v4\_own\_ip) | v4 ip address for ssh access | `string` | `"87.166.101.116/32"` | no |
 | <a name="input_v6_own_ip"></a> [v6\_own\_ip](#input\_v6\_own\_ip) | v6 ip address for ssh access | `string` | `"2003:F8:4715:E0D:7934:1299:2D9C:B207/128"` | no |
 
