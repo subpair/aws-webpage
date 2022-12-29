@@ -42,16 +42,8 @@ module "main_region_config" { \
   <mark>asg_minimum_capacity = 3</mark> \
 }
 
-You can easily add other regions by simply using another module block into the main.tf, for example to add us-west as 
-third region:
-module "third_region_config" { \
-  source = "./infrastructure" \
-  region = "us-west-1" // or use var.third_region and declaring it in the variables.tf \
-  cidr_v4_ssh_own_ip = var.v4_own_ip \ 
-  cidr_v6_ssh_own_ip = var.v6_own_ip \
-  aws_route53_zone_primary = aws_route53_zone.primary \
-  domain_name = var.domain_name \
-}
+You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
+included, you can activate this by simply uncommenting the block 'module "third_region_config"'.
 
 # Prerequisites
 - A domain is needed, in the current code an aws domain is used. If you do not own a domain directly by aws, delete the 
@@ -60,8 +52,12 @@ provider.
 - AWS CLI (https://aws.amazon.com/cli)
 - Terraform (https://www.terraform.io/downloads)
 - An account in AWS IAM is set up with at-least the rights for:
-> AmazonEC2FullAccess
+> NetworkAdministrator
+
 > AmazonVPCFullAccess
+> AmazonEC2FullAccess
+> AutoScalingFullAccess
+> ElasticLoadBalancingFullAccess
 > AmazonRoute53FullAccess
 
 # Usage

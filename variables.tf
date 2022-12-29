@@ -16,7 +16,7 @@ variable sub_region {
 variable third_region {
   description = "The third region"
   type = string
-  default = "us-west-1"
+  default = "us-east-1"
 }
 variable "v4_own_ip" {
   description = "v4 ip address for ssh access"

@@ -14,7 +14,6 @@ module "sub_region_config" {
   aws_route53_zone_primary = aws_route53_zone.primary
   domain_name = var.domain_name
 }
-/// TODO: route table association not working
 //module "third_region_config" {
 //  source = "./infrastructure"
 //  region = var.third_region

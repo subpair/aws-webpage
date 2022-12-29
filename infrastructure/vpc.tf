@@ -62,9 +62,11 @@ resource "aws_route_table" "internet" {
 resource "aws_route_table_association" "av1_to_internet" {
   subnet_id      = aws_subnet.av_1.id
   route_table_id = aws_route_table.internet.id
+  depends_on = [aws_route_table.internet] // Needed for more than 2 regions, else terraform will error on this (Bug?)
 }
 // Route entry for availability zone 2
 resource "aws_route_table_association" "av2_to_internet" {
   subnet_id      = aws_subnet.av_2.id
   route_table_id = aws_route_table.internet.id
+  depends_on = [aws_route_table.internet] // Needed for more than 2 regions, else terraform will error on this (Bug?)
 }
