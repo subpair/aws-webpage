@@ -1,28 +1,33 @@
-variable domain_name {
+variable "domain_name" {
   description = "The domain name"
-  type = string
-  default = "subpair.click"
+  type        = string
+  default     = "subpair.click"
 }
-variable main_region {
+
+variable "main_region" {
   description = "The main region"
-  type = string
-  default = "eu-central-1"
+  type        = string
+  default     = "eu-west-2"
 }
-variable sub_region {
+
+variable "sub_region" {
   description = "The sub region"
-  type = string
-  default = "us-west-1"
+  type        = string
+  default     = "us-west-1"
 }
-variable third_region {
+
+variable "third_region" {
   description = "The third region"
-  type = string
-  default = "ca-central-1"
+  type        = string
+  default     = "ap-northeast-1"
 }
+
 variable "v4_own_ip" {
   description = "v4 ip address for ssh access"
   type        = string
   default     = "87.166.101.116/32"
 }
+
 variable "v6_own_ip" {
   description = "v6 ip address for ssh access"
   type        = string
