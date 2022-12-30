@@ -16,7 +16,6 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_main_region_config"></a> [main\_region\_config](#module\_main\_region\_config) | ./infrastructure | n/a |
-| <a name="module_sub_region_config"></a> [sub\_region\_config](#module\_sub\_region\_config) | ./infrastructure | n/a |
 
 ## Resources
 
