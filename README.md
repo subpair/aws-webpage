@@ -89,8 +89,8 @@ terraform destroy -auto-approve
 
 # Further Documentation
 
-On every push a terraform-doc is automatically generated via a GitHub action. \
-The file is named [TERRAFORM.md](TERRAFORM.md)
+On every push terraform-doc will automatically generate via a GitHub action documents. \
+The files are found as [TERRAFORM.md](TERRAFORM.md) for the root folder and in the infrastructure folder [TERRAFORM.md](infrastructure/TERRAFORM.md).
 # Contributing
 
 If you'd like to contribute, please fork the repository and make changes as you'd like. \
