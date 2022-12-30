@@ -6,14 +6,18 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.push.head.ref }}
 
-    - name: Render root path terraform docs and push changes back
+    - name: Render terraform docs and push changes back to PR
       uses: terraform-docs/gh-actions@main
       with:
         working-dir: .
         output-file: TERRAFORM.md
         output-method: inject
         git-push: "true"
+
     - name: Render infrastructure path terraform docs and push changes back
       uses: terraform-docs/gh-actions@main
       with:
