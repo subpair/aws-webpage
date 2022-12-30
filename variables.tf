@@ -7,7 +7,7 @@ variable "domain_name" {
 variable "main_region" {
   description = "The main region"
   type        = string
-  default     = "eu-west-2"
+  default     = "eu-central-1"
 }
 
 variable "sub_region" {

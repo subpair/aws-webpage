@@ -18,6 +18,12 @@ resource "aws_lb_target_group" "to_webserver" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+  health_check {
+    port     = 80
+    protocol = "HTTP"
+    timeout  = 5
+    interval = 10
+  }
   tags = {
     Name = "load-balancer-target-group"
   }
