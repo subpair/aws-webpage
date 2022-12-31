@@ -43,7 +43,7 @@ resource "aws_launch_template" "webserver_machine" {
     resource_type = "instance"
 
     tags = {
-      Name = "${var.region}.webserver"
+      Name    = "${var.region}.webserver"
       Project = "simple-webpage"
     }
   }

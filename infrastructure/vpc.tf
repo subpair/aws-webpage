@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
   cidr_block                       = var.vpc_v4_cidr_block[0]
   assign_generated_ipv6_cidr_block = true
   tags = {
-    Name = "${var.region}.vpc-main"
+    Name    = "${var.region}.vpc-main"
     Project = "simple-webpage"
   }
 }
@@ -21,7 +21,7 @@ resource "aws_subnet" "av_1" {
   availability_zone               = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch         = false
   tags = {
-    Name = "${var.region}.subnet-av-1"
+    Name    = "${var.region}.subnet-av-1"
     Project = "simple-webpage"
   }
 }
@@ -35,7 +35,7 @@ resource "aws_subnet" "av_2" {
   availability_zone               = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch         = false
   tags = {
-    Name = "${var.region}.subnet-av-2"
+    Name    = "${var.region}.subnet-av-2"
     Project = "simple-webpage"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "av_2" {
 // Internet gateway for region
 resource "aws_internet_gateway" "gw" {
   tags = {
-    Name = "${var.region}.gateway"
+    Name    = "${var.region}.gateway"
     Project = "simple-webpage"
   }
 }
@@ -57,7 +57,7 @@ resource "aws_internet_gateway_attachment" "gw_to_vpc" {
 resource "aws_route_table" "internet" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "${var.region}.routing-table"
+    Name    = "${var.region}.routing-table"
     Project = "simple-webpage"
   }
 }

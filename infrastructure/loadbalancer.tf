@@ -8,7 +8,7 @@ resource "aws_lb" "web" {
   drop_invalid_header_fields = true
 
   tags = {
-    Name = "${var.region}.load-balancer"
+    Name    = "${var.region}.load-balancer"
     Project = "simple-webpage"
   }
 }
@@ -27,7 +27,7 @@ resource "aws_lb_target_group" "to_webserver" {
     interval = 10
   }
   tags = {
-    Name = "${var.region}.load-balancer-target-group"
+    Name    = "${var.region}.load-balancer-target-group"
     Project = "simple-webpage"
   }
 }
@@ -44,7 +44,7 @@ resource "aws_lb_listener" "forward_http" {
   }
 
   tags = {
-    Name = "${var.region}.lb-listener"
+    Name    = "${var.region}.lb-listener"
     Project = "simple-webpage"
   }
 }

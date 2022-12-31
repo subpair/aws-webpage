@@ -10,7 +10,7 @@ resource "aws_key_pair" "main" {
   public_key = tls_private_key.settings.public_key_openssh
 
   tags = {
-    Name = "${var.region}.settings"
+    Name    = "${var.region}.settings"
     Project = "simple-webpage"
   }
 }
@@ -75,7 +75,7 @@ resource "aws_security_group" "traffic_rules" {
   }
 
   tags = {
-    Name = "${var.region}.security-group-traffic-rules"
+    Name    = "${var.region}.security-group-traffic-rules"
     Project = "simple-webpage"
   }
 }
