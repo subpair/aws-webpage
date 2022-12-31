@@ -86,7 +86,9 @@ If you want to delete the created resources afterwards you can run destroy.
 ```shell
 terraform destroy -auto-approve
 ```
+# Security notices
 
+Currently logging is not activated in this configuration.
 # Further Documentation
 
 On every push terraform-doc will automatically generate via a GitHub action documents. \
