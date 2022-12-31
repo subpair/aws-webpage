@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   assign_generated_ipv6_cidr_block = true
   tags = {
     Name    = "${var.region}.vpc-main"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "av_1" {
   map_public_ip_on_launch         = false
   tags = {
     Name    = "${var.region}.subnet-av-1"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_subnet" "av_2" {
   map_public_ip_on_launch         = false
   tags = {
     Name    = "${var.region}.subnet-av-2"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "av_2" {
 resource "aws_internet_gateway" "gw" {
   tags = {
     Name    = "${var.region}.gateway"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_route_table" "internet" {
   vpc_id = aws_vpc.main.id
   tags = {
     Name    = "${var.region}.routing-table"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 

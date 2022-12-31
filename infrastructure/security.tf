@@ -11,7 +11,7 @@ resource "aws_key_pair" "main" {
 
   tags = {
     Name    = "${var.region}.settings"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -24,8 +24,8 @@ resource "local_sensitive_file" "key_file" {
 }
 
 // Security group with inbound and outbound rules
-resource "aws_security_group" "traffic_rules" {
-  name        = "traffic-rules"
+resource "aws_security_group" "traffic_rules_instance" {
+  name        = "traffic-rules-instances"
   description = "allow ssh-http-yum traffic"
   vpc_id      = aws_vpc.main.id
 
@@ -43,8 +43,8 @@ resource "aws_security_group" "traffic_rules" {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
-    cidr_blocks      = [var.cidr_v4_everywhere]
-    ipv6_cidr_blocks = [var.cidr_v6_everywhere]
+    cidr_blocks      = [aws_vpc.main.cidr_block]
+    ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
   }
 
   egress {
@@ -61,8 +61,8 @@ resource "aws_security_group" "traffic_rules" {
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
-    cidr_blocks      = [var.cidr_v4_everywhere]
-    ipv6_cidr_blocks = [var.cidr_v6_everywhere]
+    cidr_blocks      = [aws_vpc.main.cidr_block]
+    ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
   }
 
   egress {
@@ -75,7 +75,36 @@ resource "aws_security_group" "traffic_rules" {
   }
 
   tags = {
-    Name    = "${var.region}.security-group-traffic-rules"
-    Project = "simple-webpage"
+    Name    = "${var.region}.security-group-traffic-rules-instances"
+    Project = var.project_name
+  }
+}
+// Security group with inbound and outbound rules
+resource "aws_security_group" "traffic_rules_load_balancer" {
+  name        = "traffic-rules-load-balancer"
+  description = "allow ssh-http-yum traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description      = "http inbound"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = [var.cidr_v4_everywhere]
+    ipv6_cidr_blocks = [var.cidr_v6_everywhere]
+  }
+
+  egress {
+    description      = "http outbound"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = [var.cidr_v4_everywhere]
+    ipv6_cidr_blocks = [var.cidr_v6_everywhere]
+  }
+
+  tags = {
+    Name    = "${var.region}.security-group-traffic-rules-load-balancer"
+    Project = var.project_name
   }
 }

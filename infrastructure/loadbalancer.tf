@@ -2,14 +2,14 @@
 resource "aws_lb" "web" {
   name                       = "web-load-balancer"
   load_balancer_type         = "application"
-  security_groups            = [aws_security_group.traffic_rules.id]
+  security_groups            = [aws_security_group.traffic_rules_load_balancer.id]
   subnets                    = [aws_subnet.av_1.id, aws_subnet.av_2.id]
   ip_address_type            = "dualstack"
   drop_invalid_header_fields = true
 
   tags = {
     Name    = "${var.region}.load-balancer"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -23,12 +23,13 @@ resource "aws_lb_target_group" "to_webserver" {
     enabled  = true
     port     = 80
     protocol = "HTTP"
+    path = "/index.html"
     timeout  = 5
     interval = 10
   }
   tags = {
     Name    = "${var.region}.load-balancer-target-group"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -45,7 +46,7 @@ resource "aws_lb_listener" "forward_http" {
 
   tags = {
     Name    = "${var.region}.lb-listener"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 

@@ -1,3 +1,9 @@
+variable "project_name" {
+  description = "The project's name"
+  type        = string
+  default     = "simple-webpage"
+}
+
 variable "region" {
   description = "The main region"
   type        = string

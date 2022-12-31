@@ -36,7 +36,7 @@ resource "aws_launch_template" "webserver_machine" {
     device_index                = 0
     associate_public_ip_address = true
     delete_on_termination       = true
-    security_groups             = [aws_security_group.traffic_rules.id]
+    security_groups             = [aws_security_group.traffic_rules_instance.id]
   }
 
   tag_specifications {
@@ -44,7 +44,7 @@ resource "aws_launch_template" "webserver_machine" {
 
     tags = {
       Name    = "${var.region}.webserver"
-      Project = "simple-webpage"
+      Project = var.project_name
     }
   }
 }

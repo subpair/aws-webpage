@@ -3,7 +3,7 @@ resource "aws_route53_zone" "primary" {
   name = var.domain_name
   tags = {
     Name    = "hosted-zone-primary"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
 
@@ -29,6 +29,6 @@ resource "aws_route53domains_registered_domain" "set_name_servers" {
 
   tags = {
     Name    = "domain-nameservers"
-    Project = "simple-webpage"
+    Project = var.project_name
   }
 }
