@@ -23,7 +23,7 @@ resource "aws_lb_target_group" "to_webserver" {
     enabled  = true
     port     = 80
     protocol = "HTTP"
-    path = "/index.html"
+    path     = "/index.html"
     timeout  = 5
     interval = 10
   }
