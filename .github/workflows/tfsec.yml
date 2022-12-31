@@ -19,7 +19,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: tfsec
+      - name: use tfsec and generate github security information
         uses: aquasecurity/tfsec-sarif-action@v0.1.0
         with:
           sarif_file: tfsec.sarif
