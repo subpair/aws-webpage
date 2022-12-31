@@ -88,7 +88,21 @@ terraform destroy -auto-approve
 ```
 # Security notices
 
-Currently logging is not activated in this configuration.
+- Currently, logging is not activated in this configuration, usually you want to log any traffic information into a S3 
+bucket or as cloudwatch metric. This includes at-least the ALB traffic flow, VPC flow and DNS queries.
+- EC2 instances have public IPs, which is used to connect over SSH to them, normally you want to avoid this and put in 
+for example some terminal instance in the cloud, which is only accessible via a VPN and which can connect then to the 
+instances.
+- For SSH access your own IP is needed, this could be a security issue, even if your ISP changes your IP daily,
+if you upload your configuration to a GitHub Repository or somewhere else. 
+- Currently, load balancer have no deletion protection, this can be a problem when applying a changed configuration, 
+usually you would activate this. It is currently deactivated to allow rapid deployment and destruction, else destroy 
+will fail without deactivating the protection first.
+- HTTP access in general is not safe, HTTPs should be used anywhere it's possible.
+- For any public accessible component you should have a firewall as further security measure, in this case especially 
+the application load balancer.
+- DNSSec is currently not activated, this should be in general to secure DNS attack surfaces.
+
 # Further Documentation
 
 On every push terraform-doc will automatically generate via a GitHub action documents. \

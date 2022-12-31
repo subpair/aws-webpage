@@ -25,11 +25,11 @@ variable "third_region" {
 variable "v4_own_ip" {
   description = "v4 ip address for ssh access"
   type        = string
-  default     = "87.166.101.116/32"
+  default     = "87.166.111.43/32"
 }
 
 variable "v6_own_ip" {
   description = "v6 ip address for ssh access"
   type        = string
-  default     = "2003:F8:4715:E0D:7934:1299:2D9C:B207/128"
+  default     = "2003:F8:470B:46DC:C0A6:8472:6D87:7CD7/128"
 }
