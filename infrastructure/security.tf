@@ -10,14 +10,15 @@ resource "aws_key_pair" "main" {
   public_key = tls_private_key.settings.public_key_openssh
 
   tags = {
-    Name = "settings"
+    Name = "${var.region}.settings"
+    Project = "simple-webpage"
   }
 }
 
 // Key output
 resource "local_sensitive_file" "key_file" {
   content              = tls_private_key.settings.private_key_pem
-  filename             = "${var.region}_${var.key_file_name}"
+  filename             = "${var.region}-${var.key_file_name}"
   file_permission      = "600"
   directory_permission = "700"
 }
@@ -74,6 +75,7 @@ resource "aws_security_group" "traffic_rules" {
   }
 
   tags = {
-    Name = "security-group-traffic-rules"
+    Name = "${var.region}.security-group-traffic-rules"
+    Project = "simple-webpage"
   }
 }

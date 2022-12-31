@@ -43,7 +43,8 @@ resource "aws_launch_template" "webserver_machine" {
     resource_type = "instance"
 
     tags = {
-      Name = "webserver"
+      Name = "${var.region}.webserver"
+      Project = "simple-webpage"
     }
   }
 }
@@ -75,7 +76,7 @@ resource "aws_autoscaling_group" "webserver" {
 
   tag {
     key                 = "Name"
-    value               = "webserver-asg"
+    value               = "${var.region}.webserver-asg"
     propagate_at_launch = true
   }
 }
