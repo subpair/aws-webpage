@@ -58,7 +58,7 @@ variables.tf:
   description = "Activate the load balancer deletion protection to avoid downtimes on terraform configuration updates" \
   type        = bool \
   <mark>default     = true</mark> \
-}>
+}
 
 
 # Prerequisites
