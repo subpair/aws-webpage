@@ -70,8 +70,6 @@ provider.
 4. An account in AWS IAM is set up with at-least the rights for:
 - AmazonVPCFullAccess
 - AmazonEC2FullAccess
-- AutoScalingFullAccess
-- ElasticLoadBalancingFullAccess
 - AmazonRoute53FullAccess
 
 # Usage
