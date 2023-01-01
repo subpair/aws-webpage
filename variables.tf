@@ -31,11 +31,23 @@ variable "third_region" {
 variable "v4_own_ip" {
   description = "v4 ip address for ssh access"
   type        = string
-  default     = "87.166.111.43/32"
+  default     = "87.166.106.16/32"
 }
 
 variable "v6_own_ip" {
   description = "v6 ip address for ssh access"
   type        = string
-  default     = "2003:F8:470B:46DC:C0A6:8472:6D87:7CD7/128"
+  default     = "2003:F8:4712:D584:F488:FEFC:FCFD:C/128"
+}
+
+variable "load_balancer_deletion_protection" {
+  description = "Activate the load balancer deletion protection to avoid downtimes on terraform configuration updates"
+  type        = bool
+  default     = false
+}
+
+variable "target_port" {
+  description = "The application's target port"
+  type        = number
+  default     = 80
 }

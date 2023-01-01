@@ -39,6 +39,12 @@ resource "aws_launch_template" "webserver_machine" {
     security_groups             = [aws_security_group.traffic_rules_instance.id]
   }
 
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "optional"
+    http_put_response_hop_limit = 1
+  }
+
   tag_specifications {
     resource_type = "instance"
 
@@ -58,6 +64,7 @@ resource "aws_autoscaling_group" "webserver" {
   min_size                  = var.asg_minimum_capacity
   default_cooldown          = var.asg_default_cooldown
   health_check_grace_period = var.asg_health_check_grace_period
+  target_group_arns         = [aws_lb_target_group.to_webserver.arn]
 
   warm_pool {
     pool_state                  = "Running"
@@ -69,9 +76,20 @@ resource "aws_autoscaling_group" "webserver" {
     }
   }
 
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 20
+    }
+  }
+
   launch_template {
     id      = aws_launch_template.webserver_machine.id
-    version = "$Latest"
+    version = aws_launch_template.webserver_machine.latest_version
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   tag {

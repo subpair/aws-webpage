@@ -52,8 +52,8 @@ resource "aws_security_group" "traffic_rules_instance" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = [var.cidr_v4_everywhere]
-    ipv6_cidr_blocks = [var.cidr_v6_everywhere]
+    cidr_blocks      = [aws_vpc.main.cidr_block]
+    ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
   }
 
   egress {

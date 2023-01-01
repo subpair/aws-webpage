@@ -6,7 +6,7 @@ resource "aws_lb" "web" {
   subnets                    = [aws_subnet.av_1.id, aws_subnet.av_2.id]
   ip_address_type            = "dualstack"
   drop_invalid_header_fields = true
-
+  enable_deletion_protection = var.load_balancer_deletion_protection
   tags = {
     Name    = "${var.region}.load-balancer"
     Project = var.project_name
@@ -16,7 +16,7 @@ resource "aws_lb" "web" {
 // Load balancer target group for HTTP traffic
 resource "aws_lb_target_group" "to_webserver" {
   name     = "webtraffic"
-  port     = 80
+  port     = var.target_port
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
   health_check {

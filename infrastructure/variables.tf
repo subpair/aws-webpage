@@ -131,3 +131,15 @@ variable "domain_name" {
 variable "aws_route53_zone_primary" {
   description = "The primary route53 hosted zone"
 }
+
+variable "load_balancer_deletion_protection" {
+  description = "Activate the load balancer deletion protection to avoid downtimes on terraform configurations updates"
+  type        = bool
+  default     = true
+}
+
+variable "target_port" {
+  description = "The application's target port"
+  type        = number
+  default     = 80
+}

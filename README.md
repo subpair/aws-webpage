@@ -10,6 +10,10 @@ This configuration contains:
 - Auto-scaling and load balanced Ec2 infrastructure with a minimal webserver deployment (preconfigured for two regions)
 - Route53 latency routing to the load balanced regions
 - Modular build to easily scale the infrastructure to add more regions
+
+A two region architecture will approximately look like the following:
+![](pictures/concept.png)
+
 # Configuration
 1. You have to change the domain_name variable in the variables.tf to your domain to get the configuration up and 
 running.
@@ -43,6 +47,19 @@ folder:
 5. You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
 included, you can activate this by simply uncommenting the block 'module "third_region_config"' in the main.tf in the 
 root folder.
+
+6. Load-balancer deletion protection is turned off to have everything rapidly be deployed and destroyed, but if you want 
+to run changes via another terraform apply load-balancers might become unresponsive for some time. If this gets activated 
+and terraform destroy is ran it will run endlessly by not being able to remove the load-balancers. \
+You can activate this easily by changing it in the variables.tf: 
+
+variables.tf:
+>variable "load_balancer_deletion_protection" { \
+  description = "Activate the load balancer deletion protection to avoid downtimes on terraform configuration updates" \
+  type        = bool \
+  <mark>default     = true</mark> \
+}>
+
 
 # Prerequisites
 1. A domain is needed, in the current code an aws domain is used. If you do not own a domain directly by aws, delete the 
@@ -94,10 +111,7 @@ bucket or as a cloudwatch metric. This includes at-least the ALB traffic flow, V
 for example some terminal instance in the cloud, which is only accessible via a VPN and which can connect then to the 
 instances.
 - For SSH access your own IP is needed, this could be a security issue, even if your ISP changes your IP daily,
-if you upload your configuration to a GitHub Repository or somewhere else. 
-- Currently, the load balancers have no deletion protection, this can be a problem when applying a changed configuration, 
-usually you would activate this. It is currently deactivated to allow rapid deployment and destruction, else 
-terraform destroy will fail without deactivating the protection first.
+if you upload your configuration to a GitHub Repository or somewhere else.
 - HTTP access in general is not safe, HTTPs should be used anywhere it's possible.
 - For any public accessible component you should have a firewall as further security measure, in this case especially 
 the application load balancer.
