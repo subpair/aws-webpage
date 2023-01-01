@@ -1,6 +1,6 @@
 module "main_region_config" {
-  project_name                      = var.project_name
   source                            = "./infrastructure"
+  project_name                      = var.project_name
   region                            = var.main_region
   cidr_v4_ssh_own_ip                = var.v4_own_ip
   cidr_v6_ssh_own_ip                = var.v6_own_ip
@@ -11,8 +11,8 @@ module "main_region_config" {
 }
 
 module "sub_region_config" {
-  project_name                      = var.project_name
   source                            = "./infrastructure"
+  project_name                      = var.project_name
   region                            = var.sub_region
   cidr_v4_ssh_own_ip                = var.v4_own_ip
   cidr_v6_ssh_own_ip                = var.v6_own_ip

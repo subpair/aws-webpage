@@ -39,9 +39,16 @@ resource "aws_launch_template" "webserver_machine" {
     security_groups             = [aws_security_group.traffic_rules_instance.id]
   }
 
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      encrypted = true
+    }
+  }
+
   metadata_options {
     http_endpoint               = "enabled"
-    http_tokens                 = "optional"
+    http_tokens                 = "required"
     http_put_response_hop_limit = 1
   }
 
@@ -67,7 +74,7 @@ resource "aws_autoscaling_group" "webserver" {
   target_group_arns         = [aws_lb_target_group.to_webserver.arn]
 
   warm_pool {
-    pool_state                  = "Running"
+    pool_state                  = "Hibernated"
     min_size                    = var.asg_warm_pool_min_size
     max_group_prepared_capacity = var.asg_warm_pool_max_size
 
