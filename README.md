@@ -15,14 +15,25 @@ A two region architecture will approximately look like the following:
 ![](pictures/concept.png)
 
 # Configuration
-1. You have to change the domain_name variable in the variables.tf to your domain to get the configuration up and 
-running.
+1. You have to change the domain_name variable in the variables.tf to your domain to get the configuration running.
 
 2. To allow access to the server instance via ssh you need to configure in the variables.tf the values for 
 <mark>*v4_own_ip*</mark> and <mark>*v6_own_ip*</mark> with your own ipv4 and ipv6 address
 
-3. You can change anything else in the configuration easily by overriding the variables in the main.tf or variables.tf 
-file in the root folder. \
+3. Load-balancer deletion protection is turned off by default to have everything rapidly be deployed and destroyed, but 
+if you want to run changes via another terraform apply load-balancers might become unresponsive for some time. If this 
+gets activated and terraform destroy is ran it will run endlessly by not being able to remove the load-balancers. \
+You can activate this easily by changing it in the variables.tf: 
+
+variables.tf:
+>variable "load_balancer_deletion_protection" { \
+  description = "Activate the load balancer deletion protection to avoid downtimes on terraform configuration updates" \
+  type = bool \
+  <mark>default = true</mark> \
+}
+> 
+4.(optional) You can change anything else in the configuration easily by overriding the variables in the main.tf or 
+variables.tf file in the root folder. \
 If you want to change for example the second region to us-east-1, you can edit the variables.tf and change the 
 sub_region block to:
 
@@ -33,7 +44,7 @@ variables.tf:
   default = <mark>"us-east-1"</mark> \
 }
 
-4. If you want to change some settings, for example the minimum auto-scaling capacity for one region you can either 
+5.(optional) If you want to change some settings, for example the minimum auto-scaling capacity for one region you can either 
 simply add this by overriding the variable in the main.tf file, or changing the variable in the variables.tf in the infrastructure 
 folder:
 
@@ -44,22 +55,9 @@ folder:
   <mark>asg_minimum_capacity = 3</mark> \
 }
 
-5. You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
+6.(optional) You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
 included, you can activate this by simply uncommenting the block 'module "third_region_config"' in the main.tf in the 
 root folder.
-
-6. Load-balancer deletion protection is turned off to have everything rapidly be deployed and destroyed, but if you want 
-to run changes via another terraform apply load-balancers might become unresponsive for some time. If this gets activated 
-and terraform destroy is ran it will run endlessly by not being able to remove the load-balancers. \
-You can activate this easily by changing it in the variables.tf: 
-
-variables.tf:
->variable "load_balancer_deletion_protection" { \
-  description = "Activate the load balancer deletion protection to avoid downtimes on terraform configuration updates" \
-  type        = bool \
-  <mark>default     = true</mark> \
-}
-
 
 # Prerequisites
 1. A domain is needed, in the current code an aws domain is used. If you do not own a domain directly by aws, delete the 

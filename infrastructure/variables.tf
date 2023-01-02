@@ -11,7 +11,7 @@ variable "region" {
 }
 
 variable "vpc_v4_cidr_block" {
-  description = "Available v4 cidr blocks for public subnets."
+  description = "Available v4 cidr blocks for private subnets."
   type        = list(string)
   default = [
     "10.0.0.0/16",
@@ -19,7 +19,7 @@ variable "vpc_v4_cidr_block" {
 }
 
 variable "subnet_v4_cidr_blocks" {
-  description = "Available v4 cidr blocks for public subnets."
+  description = "Available v4 cidr blocks for private subnets."
   type        = list(string)
   default = [
     "10.0.0.0/17",

@@ -52,6 +52,8 @@ resource "aws_launch_template" "webserver_machine" {
     http_put_response_hop_limit = 1
   }
 
+  update_default_version = true
+
   tag_specifications {
     resource_type = "instance"
 
