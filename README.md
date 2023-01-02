@@ -31,8 +31,9 @@ variables.tf:
   type = bool \
   <mark>default = true</mark> \
 }
-> 
-4.(optional) You can change anything else in the configuration easily by overriding the variables in the main.tf or 
+>
+## Optional changes
+1. You can change anything else in the configuration easily by overriding the variables in the main.tf or 
 variables.tf file in the root folder. \
 If you want to change for example the second region to us-east-1, you can edit the variables.tf and change the 
 sub_region block to:
@@ -44,7 +45,7 @@ variables.tf:
   default = <mark>"us-east-1"</mark> \
 }
 
-5.(optional) If you want to change some settings, for example the minimum auto-scaling capacity for one region you can either 
+2. If you want to change some settings, for example the minimum auto-scaling capacity for one region you can either 
 simply add this by overriding the variable in the main.tf file, or changing the variable in the variables.tf in the infrastructure 
 folder:
 
@@ -55,7 +56,7 @@ folder:
   <mark>asg_minimum_capacity = 3</mark> \
 }
 
-6.(optional) You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
+3. You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
 included, you can activate this by simply uncommenting the block 'module "third_region_config"' in the main.tf in the 
 root folder.
 
