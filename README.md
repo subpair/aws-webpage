@@ -21,8 +21,8 @@ A two region architecture will approximately look like the following:
 <mark>*v4_own_ip*</mark> and <mark>*v6_own_ip*</mark> with your own ipv4 and ipv6 address
 
 3. Load-balancer deletion protection is turned off by default to have everything rapidly be deployed and destroyed, but 
-if you want to run changes via another terraform apply load-balancers might become unresponsive for some time. If this 
-gets activated and terraform destroy is ran it will run endlessly by not being able to remove the load-balancers. \
+if you want to run changes via another terraform apply load-balancers might become unresponsive for some time. \
+If this gets activated and terraform destroy is ran it will run endlessly by not being able to remove the load-balancers. 
 You can activate this easily by changing it in the variables.tf: 
 
 variables.tf:
@@ -33,7 +33,7 @@ variables.tf:
 }
 >
 ## Optional changes
-1. You can change anything else in the configuration easily by overriding the variables in the main.tf or 
+1. You can change anything else in the configuration simply by overriding the variables in the main.tf or 
 variables.tf file in the root folder. \
 If you want to change for example the second region to us-east-1, you can edit the variables.tf and change the 
 sub_region block to:
@@ -56,7 +56,7 @@ folder:
   <mark>asg_minimum_capacity = 3</mark> \
 }
 
-3. You can easily add other regions by simply using another module block in the main.tf, an example for a third region is 
+3. You can quickly add other regions by using another module block in the main.tf, an example for a third region is 
 included, you can activate this by simply uncommenting the block 'module "third_region_config"' in the main.tf in the 
 root folder.
 
@@ -105,7 +105,7 @@ terraform destroy -auto-approve
 - Currently, logging is not activated in this configuration, usually you want to log any traffic information into a S3 
 bucket or as a cloudwatch metric. This includes at-least the ALB traffic flow, VPC flow and DNS queries.
 - EC2 instances have public IPs, which is used to connect over SSH to them, normally you want to avoid this and put in 
-for example some terminal instance in the cloud, which is only accessible via a VPN and which can connect then to the 
+for example some terminal instance in the cloud, which is only accessible via a VPN and then can connect to the 
 instances.
 - For SSH access your own IP is needed, this could be a security issue, even if your ISP changes your IP daily,
 if you upload your configuration to a GitHub Repository or somewhere else.
