@@ -69,7 +69,7 @@ variable "key_bit_size" {
 }
 
 variable "key_file_name" {
-  description = "The key name"
+  description = "The key file name"
   type        = string
   default     = "sshKey.pem"
 }
